@@ -9,13 +9,18 @@ Ext.define('NotesApp.controller.Notes', {
     control: {
       notesListView: {
         // The commands fired by the notes list
-        newNoteCommand: 'onNewNoteCommand'
+        newNoteCommand: 'onNewNoteCommand',
+        editNoteCommand: 'onEditNoteCommand'
       }
     }
   },
   
   onNewNoteCommand: function () {
     console.log('onNewNoteCommand');
+  },
+  
+  onEditNoteCommand: function(list, record) {
+    console.log('onEditNoteCommand');
   },
   
   // Base class methods
