@@ -4,7 +4,8 @@ Ext.define('NotesApp.controller.Notes', {
   config: {
     refs: {
       // We're going to look up our views by xtype
-      notesListView: 'noteslistview'
+      notesListView: 'noteslistview',
+      noteEditorView: 'noteeditorview'
     },
     control: {
       notesListView: {
@@ -15,12 +16,42 @@ Ext.define('NotesApp.controller.Notes', {
     }
   },
   
+  slideLeftTransition: {
+    type: 'slide',
+    direction: 'left'
+  },
+  
   onNewNoteCommand: function () {
     console.log('onNewNoteCommand');
+    var now = new Date();
+    var noteId = (now.getTime()).toString() + (this.getRandomInt(0, 100)).toString();
+    
+    var newNote = Ext.create('NotesApp.model.Note', {
+      id: noteId,
+      dateCreated: now,
+      title: '',
+      narrative: ''
+    });
+    
+    this.activateNoteEditor(newNote);
+    
+  },
+  
+  getRandomInt: function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  },
+  
+  activateNoteEditor: function(record) {
+    var noteEditorView = this.getNoteEditorView();
+    
+    noteEditorView.setRecord(record);
+    Ext.Viewport.animateActiveItem(noteEditorView, this.slideLeftTransition);
+    
   },
   
   onEditNoteCommand: function(list, record) {
     console.log('onEditNoteCommand');
+    
   },
   
   // Base class methods
